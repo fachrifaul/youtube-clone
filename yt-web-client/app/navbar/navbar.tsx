@@ -1,8 +1,26 @@
+'use client';
+
+import { User } from 'firebase/auth';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { onAuthStateChangedHelper } from '../firebase/firebase';
 import styles from './navbar.module.css';
+import SignIn from './sign-in';
 
 export default function Navbar() {
+  // init user state
+  const [user, setUser] = useState<User | null>(null);
+
+  // Hook
+  useEffect(() => {
+    const unsubscribe = onAuthStateChangedHelper((user) => {
+      setUser(user);
+    });
+
+    return () => unsubscribe();
+  });
+
   return (
     <nav className={styles.nav}>
       <Link href='/'>
@@ -13,6 +31,10 @@ export default function Navbar() {
           alt='Youtube Logo'
         />
       </Link>
+      {
+        // TODO add upload video
+      }
+      <SignIn user={user} />
     </nav>
   );
 }
