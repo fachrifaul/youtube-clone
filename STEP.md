@@ -65,3 +65,13 @@ gsutil mb -l asia-southeast1 gs://nc-yt-processed-video
 ```
 npx create-next-app@latest . 
 ```
+
+
+## Firebase 
+
+
+```
+npm install -g firebase-tools 
+
+firebase login
+```
