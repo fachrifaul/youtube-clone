@@ -1,7 +1,10 @@
-export default function Watch() {
+import { Suspense } from 'react';
+import WatchContent from './watch';
+
+export default function WatchPage() {
   return (
-    <div>
-      <h1>Watch Page</h1>
-    </div>
+    <Suspense fallback={<div>Loading video...</div>}>
+      <WatchContent />
+    </Suspense>
   );
 }

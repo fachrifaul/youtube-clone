@@ -95,10 +95,9 @@ gcloud run services add-iam-policy-binding generateUploadUrl \
 ```
 
 
-## Redeploy
+## Redeploy service
 
 ```
-# Deploy container to cloud run
 docker build --platform linux/amd64 -t asia-southeast1-docker.pkg.dev/yt-clone-f52b3/video-processing-repo/video-processing-service .
 
 docker push asia-southeast1-docker.pkg.dev/yt-clone-f52b3/video-processing-repo/video-processing-service 
@@ -112,5 +111,38 @@ gcloud run deploy video-processing-service --image asia-southeast1-docker.pkg.de
   --min-instances=0 \
   --max-instances=1 \
   --ingress=internal
+
+```
+
+## deploy web-client
+1. create registry
+
+```
+
+gcloud artifacts repositories create yt-web-client \
+--repository-format=docker \
+--location=asia-southeast1 \
+--description="Docker repo for yt-web-client"
+
+```
+
+2. build docker
+```
+docker build --platform linux/amd64 -t asia-southeast1-docker.pkg.dev/yt-clone-f52b3/yt-web-client-repo/yt-web-client .
+
+docker push asia-southeast1-docker.pkg.dev/yt-clone-f52b3/yt-web-client-repo/yt-web-client
+```
+
+3. Deploy
+
+```
+gcloud run deploy yt-web-client --image asia-southeast1-docker.pkg.dev/yt-clone-f52b3/yt-web-client-repo/yt-web-client \
+  --region=asia-southeast1  \
+  --platform managed \
+  --timeout=3600 \
+  --memory=2Gi \
+  --cpu=1 \
+  --min-instances=0 \
+  --max-instances=1
 
 ```
