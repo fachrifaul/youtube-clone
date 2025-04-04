@@ -1,23 +1,41 @@
-# Use Node.js slim image for a balance of size & performance
-FROM node:20-slim
+# Stage 1: Build stage
+FROM node:20-slim AS builder
 
-# Set working directory
+# Set the working directory in the container to /app
 WORKDIR /app
 
-# Copy package.json and package-lock.json into working directory
+# Copy package.json and package-lock.json into the working directory
 COPY package*.json ./
 
-# Install FFmpeg
-RUN apt-get update && apt-get install -y ffmpeg
+# Install any needed packages specified in package.json
+RUN npm install
 
-# Install dependencies --only=production
-RUN npm install 
-
-# Copy the rest of the app
+# Bundle app source inside the docker image
 COPY . .
 
-# Expose port 3000 available outside the container
+# Build the app
+RUN npm run build
+
+# Stage 2: Production stage
+FROM node:20-slim
+
+# Install ffmpeg in the container
+RUN apt-get update && apt-get install -y ffmpeg
+
+# Set the working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install only production dependencies
+RUN npm install --only=production
+
+# Copy built app from the builder stage
+COPY --from=builder /app/dist ./dist
+
+# Make port 3000 available to the world outside this container
 EXPOSE 3000
 
-# Start the application
-CMD ["npm", "start"]
+# Define the command to run your app using CMD which defines your runtime
+CMD [ "npm", "run", "serve" ]
