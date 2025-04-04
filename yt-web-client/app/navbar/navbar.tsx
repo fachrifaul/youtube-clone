@@ -9,7 +9,11 @@ import styles from './navbar.module.css';
 import SignIn from './sign-in';
 import Upload from './uploaded';
 
-export default function Navbar() {
+export default function Navbar({
+  onUploadSuccess,
+}: {
+  onUploadSuccess: () => void;
+}) {
   // init user state
   const [user, setUser] = useState<User | null>(null);
 
@@ -32,7 +36,7 @@ export default function Navbar() {
           alt='Youtube Logo'
         />
       </Link>
-      {user && <Upload />}
+      {user && <Upload onUploadSuccess={onUploadSuccess} />}
       <SignIn user={user} />
     </nav>
   );

@@ -4,7 +4,11 @@ import { Fragment } from 'react';
 import { uploadVideo } from '../firebase/functions';
 import styles from './uploaded.module.css';
 
-export default function Upload() {
+export default function Upload({
+  onUploadSuccess,
+}: {
+  onUploadSuccess: () => void;
+}) {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.item(0);
     if (file) {
@@ -16,6 +20,7 @@ export default function Upload() {
     try {
       const response = await uploadVideo(file);
       alert(`File uploaded successfully! ${JSON.stringify(response)}`);
+      onUploadSuccess();
     } catch (error) {
       alert(`Failed to upload file: ${error}`);
     }
@@ -30,10 +35,7 @@ export default function Upload() {
         accept='video/*'
         onChange={handleFileChange}
       />
-      <label
-        htmlFor='upload'
-        className={styles.uploadButton}
-      >
+      <label htmlFor='upload' className={styles.uploadButton}>
         <svg
           xmlns='http://www.w3.org/2000/svg'
           fill='none'
