@@ -54,3 +54,13 @@ export const generateUploadUrl = onCall({ maxInstances: 1 }, async (request) => 
 
     return { url, fileName };
 });
+
+export const getVideos = onCall({ maxInstances: 1 }, async (request) => {
+    const videos = await firestore
+        .collection("videos")
+        .limit(10)
+        .get();
+    return videos
+        .docs
+        .map((doc) => doc.data());
+});
