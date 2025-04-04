@@ -93,3 +93,24 @@ gcloud run services add-iam-policy-binding generateUploadUrl \
   --role="roles/run.invoker"
 
 ```
+
+
+## Redeploy
+
+```
+# Deploy container to cloud run
+docker build --platform linux/amd64 -t asia-southeast1-docker.pkg.dev/yt-clone-f52b3/video-processing-repo/video-processing-service .
+
+docker push asia-southeast1-docker.pkg.dev/yt-clone-f52b3/video-processing-repo/video-processing-service 
+
+gcloud run deploy video-processing-service --image asia-southeast1-docker.pkg.dev/yt-clone-f52b3/video-processing-repo/video-processing-service \
+  --region=asia-southeast1  \
+  --platform managed \
+  --timeout=3600 \
+  --memory=2Gi \
+  --cpu=1 \
+  --min-instances=0 \
+  --max-instances=1 \
+  --ingress=internal
+
+```

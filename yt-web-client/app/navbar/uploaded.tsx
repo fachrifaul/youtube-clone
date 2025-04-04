@@ -4,11 +4,7 @@ import { Fragment } from 'react';
 import { uploadVideo } from '../firebase/functions';
 import styles from './uploaded.module.css';
 
-interface UploadProps {
-  v1Enabeld: boolean;
-}
-
-export default function Upload({ v1Enabeld }: UploadProps) {
+export default function Upload() {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.item(0);
     if (file) {
@@ -28,14 +24,14 @@ export default function Upload({ v1Enabeld }: UploadProps) {
   return (
     <Fragment>
       <input
-        id={v1Enabeld ? 'uploadV1' : 'uploadv2'}
+        id='upload'
         className={styles.uploadInput}
         type='file'
         accept='video/*'
         onChange={handleFileChange}
       />
       <label
-        htmlFor={v1Enabeld ? 'uploadV1' : 'uploadv2'}
+        htmlFor='upload'
         className={styles.uploadButton}
       >
         <svg

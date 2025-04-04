@@ -32,8 +32,7 @@ export default function Navbar() {
           alt='Youtube Logo'
         />
       </Link>
-      {user && <Upload v1Enabeld={true} />}
-      {user && <Upload  v1Enabeld={false} />}
+      {user && <Upload />}
       <SignIn user={user} />
     </nav>
   );
