@@ -57,3 +57,11 @@ gsutil notification create -t video-uploads-topic -f json OBJECT_FINALIZE gs://n
 
 gsutil mb -l asia-southeast1 gs://nc-yt-processed-video
 ```
+
+
+## Create Web app using Next.js
+
+
+```
+npx create-next-app@latest . 
+```
