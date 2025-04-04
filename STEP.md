@@ -88,12 +88,7 @@ gcloud storage buckets update gs://nc-yt-raw-video --cors-file=utils/gcs-cors.js
 
 ```
 gcloud run services add-iam-policy-binding generateUploadUrl \
-  --region="asia-southeast1" \
-  --member="allUsers" \
-  --role="roles/run.invoker"
-
-gcloud run services add-iam-policy-binding generateUploadUrlV1 \
-  --region="asia-southeast1" \
+  --region="us-central1" \
   --member="allUsers" \
   --role="roles/run.invoker"
 

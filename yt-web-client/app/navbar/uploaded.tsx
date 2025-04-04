@@ -1,7 +1,7 @@
 'use client';
 
 import { Fragment } from 'react';
-import { uploadVideo, uploadVideoV1 } from '../firebase/functions';
+import { uploadVideo } from '../firebase/functions';
 import styles from './uploaded.module.css';
 
 interface UploadProps {
@@ -17,20 +17,11 @@ export default function Upload({ v1Enabeld }: UploadProps) {
   };
 
   const handleUpload = async (file: File) => {
-    if (v1Enabeld) {
-      try {
-        const response = await uploadVideoV1(file);
-        alert(`File uploaded successfully! ${JSON.stringify(response)}`);
-      } catch (error) {
-        alert(`Failed to upload file: ${error}`);
-      }
-    } else {
-      try {
-        const response = await uploadVideo(file);
-        alert(`File uploaded successfully! ${JSON.stringify(response)}`);
-      } catch (error) {
-        alert(`Failed to upload file: ${error}`);
-      }
+    try {
+      const response = await uploadVideo(file);
+      alert(`File uploaded successfully! ${JSON.stringify(response)}`);
+    } catch (error) {
+      alert(`Failed to upload file: ${error}`);
     }
   };
 
