@@ -75,3 +75,11 @@ npm install -g firebase-tools
 
 firebase login
 ```
+
+
+## update cors
+
+```
+gcloud storage buckets update gs://nc-yt-raw-video --cors-file=utils/gcs-cors.json
+
+```
